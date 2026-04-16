@@ -1,65 +1,88 @@
+"use client"
 import Image from "next/image";
+import { Grid,Paper,Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import FileTable from "./components/FileTable";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import AddUploadFileMenu from "./components/AddUploadFileMenu"; 
+import React, { useState } from "react";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import Topbar from "./components/Topbar";
+import Sidemenu from "./components/Sidemenu";
+
+
+
+
+
+
+
+
+
 
 export default function Home() {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div>
+      <Grid container spacing={2}>
+          <Grid size={12} >
+            <Topbar />
+          </Grid>
+          <Grid size={2} sx={{ mx: 1 }}>
+            <Button variant="outlined"  size="large"  startIcon={<AddIcon /> } aria-controls={open ? 'upload-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              id="basic-button" 
+              sx={{ width: 320, maxWidth: '100%' }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              New
+            </Button>
+            <Menu id="upload-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+                <MenuItem>
+                    <ListItemIcon>
+                        <UploadFileIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Upload File</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                    <ListItemIcon>
+                        <CreateNewFolderIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Upload Folder</ListItemText>
+                </MenuItem>
+            </Menu>
+            <Sidemenu />
+          </Grid>
+          <Grid size={9} component={Paper} sx={{px:2, pt:2}}>
+            <Button variant="text" color="primary" size="large"
+              aria-controls={open ? 'upload-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              id="basic-button" 
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              <Typography variant="h4" sx={{color:'black'}}>My Drive</Typography>
+              <ArrowDropDownIcon sx={{color:'black'}}/>
+            </Button>
+            
+            <FileTable />
+            
+          </Grid>
+      </Grid>
     </div>
   );
 }
