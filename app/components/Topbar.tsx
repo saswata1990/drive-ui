@@ -2,6 +2,7 @@ import { AppBar, Badge, Box, IconButton, Toolbar } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 import { AccountCircle, AccountCircleOutlined, Email, Notifications, QuestionMark, QuestionMarkRounded, Settings, SettingsOutlined, Support } from '@mui/icons-material';
+import Themechanger from './Themechanger';
 
 function Topbar() {
   return (
@@ -32,6 +33,7 @@ function Topbar() {
                     >
                         <AccountCircleOutlined />
                     </IconButton>
+                    <Themechanger />
                 </Box>
             </Toolbar>
             
